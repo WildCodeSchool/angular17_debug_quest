@@ -1,1 +1,3 @@
-<p>Article id {{ article.id }}</p>
+@if (article$ | async; as article) {
+<p>Titre {{ article.title }}</p>
+}

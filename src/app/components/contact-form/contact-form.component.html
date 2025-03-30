@@ -1,8 +1,8 @@
-<form (ngSubmit)="contactForm.valid && onSubmit()">
+<form #contactForm="ngForm" (ngSubmit)="contactForm.valid && onSubmit()">
   <fieldset>
     <label for="lastname">Nom</label>
-    <input id="lastname" name="lastname" type="text" require min="2">
-    @if (lastname.errors) {
+    <input id="lastname" name="lastname" type="text" required minlength="2" [(ngModel)]="newMessage.lastname" #lastname="ngModel">
+    @if (lastname.errors && lastname.touched && lastname.dirty) {
       <div>
         @if (lastname.errors['required']) {
           <span>Le nom est requis</span>
@@ -16,8 +16,8 @@
 
   <fieldset>
     <label for="firstname">Prénom</label>
-    <input id="firstname" name="firstname" type="text" require min="2">
-    @if (firstname.errors) {
+    <input id="firstname" name="firstname" type="text" required minlength="2" [(ngModel)]="newMessage.firstname" #firstname="ngModel">
+    @if (firstname.errors && firstname.touched && firstname.dirty) {
       <div>
         @if (firstname.errors['required']) {
           <span>Le prénom est requis</span>
@@ -31,8 +31,8 @@
 
   <fieldset>
     <label for="email">Contact</label>
-    <input id="email" name="email" type="email" require email>
-    @if (email.errors) {
+    <input id="email" name="email" type="email" required email [(ngModel)]="newMessage.email" #email="ngModel">
+    @if (email.errors && email.touched && email.dirty) {
       <div>
         @if (email.errors['required']) {
           <span>L'email est requis</span>
@@ -46,8 +46,8 @@
 
   <fieldset>
     <label for="content">Contenu du message</label>
-    <textarea id="content" name="content" require minlength="20" rows="4" cols="50"></textarea>
-    @if (content.errors) {
+    <textarea id="content" name="content" required minlength="20" rows="4" cols="50" [(ngModel)]="newMessage.content" #content="ngModel"></textarea>
+    @if (content.errors && content.touched && content.dirty) {
       <div>
         @if (content.errors['required']) {
           <span>Le contenu du message est requis</span>
@@ -60,5 +60,5 @@
   </fieldset>
 
   <button type="reset">Restaurer</button>
-  <button type="submit">Sauvegarder</button>
+  <button type="submit" [disabled]="contactForm.invalid">Sauvegarder</button>
 </form>
